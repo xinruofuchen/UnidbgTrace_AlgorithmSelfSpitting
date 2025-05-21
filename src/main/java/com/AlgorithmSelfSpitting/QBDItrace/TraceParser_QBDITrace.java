@@ -5,6 +5,7 @@ import com.AlgorithmSelfSpitting.QBDItrace.entity.algorithmType;
 import com.AlgorithmSelfSpitting.QBDItrace.util.AlgorithmAutoEmitterUtility;
 import com.AlgorithmSelfSpitting.QBDItrace.util.SaveLog;
 import com.AlgorithmSelfSpitting.QBDItrace.util.StringUtil;
+import com.AlgorithmSelfSpitting.publicclass.publicEntity;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.commons.io.input.ReversedLinesFileReader;
@@ -62,7 +63,7 @@ public class TraceParser_QBDITrace {
                         algorithmType type = AlgorithmAutoEmitterUtility.AlgorithmRecognition(map.get("argsVal"),map);
                         if (type!=algorithmType.NOAlgorithm){
 //                            System.out.println(type.toString()+" : "+line);
-                            SaveLog.storeContentByLine(type.toString() + " :  " + line,"/Users/yourpath/trace_algorithm.log");
+                            SaveLog.storeContentByLine(type.toString() + " :  " + line, publicEntity.path+"/trace_algorithm.log");
                         }
 
                     }
@@ -118,7 +119,7 @@ public void test(){
         String line = "0x1fcfc8  _e001000b  \tadd\tw0, w15, w0       r[w0=98badcfe w15=67452301]   w[w0=ffffffff]";
         line = "0x1fcfc8  _e001000b  \tadd\tw0, w15, w0       r[w0=98badcfe w15=67452301]   w[w0=ffffffff]";
     if (line.startsWith("0x")) {
-        SaveLog.storeContentByLine(line,"/Users/yourpath/trace_algorithm.log");
+        SaveLog.storeContentByLine(line,publicEntity.path+"/trace_algorithm.log");
         String [] split_INSTRUCTION = line.toString().split("  ");
         Map<String,String> map = new HashMap<>();
         for (String s : split_INSTRUCTION) {
@@ -153,7 +154,7 @@ public void test(){
 
 
     public static void main(String[] args) {
-        readFileByLine("/Users/yourpath/trace_sign.log");
+        readFileByLine(publicEntity.path+"/trace_sign.log");
     }
 
 

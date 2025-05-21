@@ -1,5 +1,6 @@
 package com.AlgorithmSelfSpitting.unidbgtrace.util;
 
+import com.AlgorithmSelfSpitting.publicclass.publicEntity;
 import com.AlgorithmSelfSpitting.unidbgtrace.TraceParser;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.Instructions;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.LineType;
@@ -299,7 +300,7 @@ public class LineTruncation {
                     }
                     superAddr = JumpDeviation;
                     //todo：这个输出单独拎出来
-                    storeContentByLine(JSON.toJSONString(program),"/yourpath/trace.log");
+                    storeContentByLine(JSON.toJSONString(program), publicEntity.path+"/trace.log");
                 }
 
             }

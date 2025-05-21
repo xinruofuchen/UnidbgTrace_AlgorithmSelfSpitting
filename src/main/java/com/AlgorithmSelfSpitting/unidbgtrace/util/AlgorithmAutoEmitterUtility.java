@@ -1,6 +1,7 @@
 package com.AlgorithmSelfSpitting.unidbgtrace.util;
 
 
+import com.AlgorithmSelfSpitting.publicclass.publicEntity;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.algorithmType;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -71,7 +72,7 @@ public class AlgorithmAutoEmitterUtility {
         for(String sm4item :sm4List){
             if( arg.equals(sm4item)){
                 //常数
-                LineTruncation.storeContentByLine("systemNum:"+arg,"/yourpath/trace.log");
+                LineTruncation.storeContentByLine("systemNum:"+arg, publicEntity.path+"/trace.log");
                 JSONObject json = JSON.parseObject(argsval);
                 if (json.getString("instructions").indexOf("eor")!=-1){
                     String keyitem = AlgorithmRecognitionKey(json.getString("argsVal"));
@@ -79,7 +80,7 @@ public class AlgorithmAutoEmitterUtility {
                     if (arg.equals("0xb27022dc")){
                         //最后一次算法，输出并清理所有key
                         String keyval = key_list.get(0)+key_list.get(1)+key_list.get(2)+key_list.get(3);
-                        LineTruncation.storeContentByLine("key:"+keyval,"/yourpath/trace.log");
+                        LineTruncation.storeContentByLine("key:"+keyval,publicEntity.path+"/trace.log");
                         key_list.clear();
                     }
                 }
@@ -88,7 +89,7 @@ public class AlgorithmAutoEmitterUtility {
         }
 
             if( arg.equals("0xd76aa478")){
-                LineTruncation.storeContentByLine("md5T[0]:"+arg,"/yourpath/trace.log");
+                LineTruncation.storeContentByLine("md5T[0]:"+arg,publicEntity.path+"/trace.log");
 
             };
 
@@ -104,7 +105,7 @@ public class AlgorithmAutoEmitterUtility {
         }
         for(String crc32item :crc32List){
             if(arg.equals(crc32item)){
-                LineTruncation.storeContentByLine(arg,"/yourpath/trace.log");
+                LineTruncation.storeContentByLine(arg,publicEntity.path+"/trace.log");
                 return algorithmType.AlgorithmCRC32;
             }
         }

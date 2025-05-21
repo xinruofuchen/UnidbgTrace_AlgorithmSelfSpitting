@@ -1,5 +1,6 @@
 package com.AlgorithmSelfSpitting.unidbgtrace;
 
+import com.AlgorithmSelfSpitting.publicclass.publicEntity;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.Instructions;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.LineType;
 import com.AlgorithmSelfSpitting.unidbgtrace.entity.MemoryAccess;
@@ -123,7 +124,7 @@ public class TraceParser {
 
 
     public static void main(String[] args) {
-        readFileByLine("/yourpath/apse_8.0.0_pay_t.log");
+        readFileByLine(publicEntity.path+"/apse_8.0.0_pay_t.log");
 
     }
 

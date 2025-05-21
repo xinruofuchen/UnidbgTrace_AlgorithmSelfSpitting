@@ -3,6 +3,7 @@ package com.AlgorithmSelfSpitting.QBDItrace.util;
 
 import com.AlgorithmSelfSpitting.QBDItrace.entity.AesSboxEntity;
 import com.AlgorithmSelfSpitting.QBDItrace.entity.algorithmType;
+import com.AlgorithmSelfSpitting.publicclass.publicEntity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -114,7 +115,7 @@ public class AlgorithmAutoEmitterUtility {
                     if (arg.equals("b27022dc")){
                         //最后一次算法，输出并清理所有key
                         String keyval = key_list.get(0)+key_list.get(1)+key_list.get(2)+key_list.get(3);
-                        SaveLog.storeContentByLine("sm4 key:"+keyval+"\n","/yourpath/trace_algorithm.log");
+                        SaveLog.storeContentByLine("sm4 key:"+keyval+"\n", publicEntity.path+"/trace_algorithm.log");
                         key_list.clear();
                     }
                 }
@@ -123,13 +124,13 @@ public class AlgorithmAutoEmitterUtility {
         }
 
             if( arg.equals("d76aa478")&&argsval.get("instructions").toString().contains("add")){ //add.*d76aa478
-                SaveLog.storeContentByLine("md5T[0]:"+arg +" "+argsval.toString(),"/yourpath/trace_algorithm.log");
+                SaveLog.storeContentByLine("md5T[0]:"+arg +" "+argsval.toString(),publicEntity.path+"/trace_algorithm.log");
             };
 
         for(String md5item :md5List){
             if( arg.equals(md5item)){
                 if (argsval.get("instructions").toString().contains("eor")&&argsval.get("argsVal").toString().contains("10325476")&&argsval.get("argsVal").toString().contains("98badcfe")&&argsval.get("resultVal").toString().contains("88888888")){
-                    SaveLog.storeContentByLine("\n\nthis is new md5  addr :"+argsval.get("deviation").toString() +"\nmd5 encode value addr in "+argsval.toString() +"\nhook this addr read or write"+"\n or argsVal equese d76aa478","/yourpath/trace_algorithm.log");
+                    SaveLog.storeContentByLine("\n\nthis is new md5  addr :"+argsval.get("deviation").toString() +"\nmd5 encode value addr in "+argsval.toString() +"\nhook this addr read or write"+"\n or argsVal equese d76aa478",publicEntity.path+"/trace_algorithm.log");
                 }
                 return algorithmType.AlgorithmMD5;
             }
@@ -231,8 +232,8 @@ public class AlgorithmAutoEmitterUtility {
                         boolean b4 = moreSbox(i,255);
                         if(b1 && b2 && b3 && b4){
 
-                            SaveLog.storeContentByLine( "Aes encode :  sbox addr:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).getMap().get("deviation") +"  _ "+map.toString(),"/yourpath/trace_algorithm.log");
-                            SaveLog.storeContentByLine( "Aes encode :  sbox manmery:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).toString()+"\n","/yourpath/trace_algorithm.log");
+                            SaveLog.storeContentByLine( "Aes encode :  sbox addr:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).getMap().get("deviation") +"  _ "+map.toString(),publicEntity.path+"/trace_algorithm.log");
+                            SaveLog.storeContentByLine( "Aes encode :  sbox manmery:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).toString()+"\n",publicEntity.path+"/trace_algorithm.log");
 
                             removeList(i);
                         }
@@ -249,7 +250,7 @@ public class AlgorithmAutoEmitterUtility {
 public static boolean moreSbox(int index,int sboxindex){
     String addr = AlgorithmAutoEmitterUtility.AESSboxNextMemory(AlgorithmAutoEmitterUtility.aesSboxMapList.get(index).getAesSboxaddr(),sboxindex);
     String str = "memory read  at "+addr+".*"+AlgorithmAutoEmitterUtility.aesSbox[sboxindex];
-    return searchInDirectory("//yourpath/trace.log",str);
+    return searchInDirectory("/"+publicEntity.path+"/trace.log",str);
 }
     public static boolean searchInDirectory(String dirPath, String keyword) {
         boolean foundAny = false;
