@@ -1,19 +1,25 @@
-package com.AlgorithmSelfSpitting.unidbgtrace.util;
+package com.AlgorithmSelfSpitting.Unidbgtrace.util;
 
 
+import com.AlgorithmSelfSpitting.Unidbgtrace.entity.AesSboxEntity;
+import com.AlgorithmSelfSpitting.Unidbgtrace.entity.algorithmType;
 import com.AlgorithmSelfSpitting.publicclass.publicEntity;
-import com.AlgorithmSelfSpitting.unidbgtrace.entity.algorithmType;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 //自吐算法
 public class AlgorithmAutoEmitterUtility {
 
-    //SM4:
     private static String[] sm4List = {"0xa3b1bac6", "0x56aa3350", "0x677d9197", "0xb27022dc"};
     private static String[] sm4T0 = {"0x8ed55b5b","0xd0924242","0x4deaa7a7","0x06fdfbfb", "0xfccf3333","0x65e28787","0xc93df4f4","0x6bb5dede","0x4e165858","0x6eb4dada","0x44145050","0xcac10b0b","0x8828a0a0","0x17f8efef","0x9c2cb0b0","0x11051414","0x872bacac","0xfb669d9d","0xf2986a6a","0xae77d9d9","0x822aa8a8","0x46bcfafa","0x14041010","0xcfc00f0f","0x02a8aaaa","0x54451111","0x5f134c4c","0xbe269898","0x6d482525","0x9e841a1a","0x1e061818","0xfd9b6666","0xec9e7272","0x4a430909","0x10514141","0x24f7d3d3","0xd5934646","0x53ecbfbf","0xf89a6262","0x927be9e9","0xff33cccc","0x04555151","0x270b2c2c","0x4f420d0d","0x59eeb7b7","0xf3cc3f3f","0x1caeb2b2","0xea638989","0x74e79393","0x7fb1cece","0x6c1c7070","0x0daba6a6","0xedca2727","0x28082020","0x48eba3a3","0xc1975656","0x80820202","0xa3dc7f7f","0xc4965252","0x12f9ebeb","0xa174d5d5","0xb38d3e3e","0xc33ffcfc","0x3ea49a9a","0x5b461d1d","0x1b071c1c","0x3ba59e9e","0x0cfff3f3","0x3ff0cfcf","0xbf72cdcd","0x4b175c5c","0x52b8eaea","0x8f810e0e","0x3d586565","0xcc3cf0f0","0x7d196464","0x7ee59b9b","0x91871616","0x734e3d3d","0x08aaa2a2","0xc869a1a1","0xc76aadad","0x85830606","0x7ab0caca","0xb570c5c5","0xf4659191","0xb2d96b6b","0xa7892e2e","0x18fbe3e3","0x47e8afaf","0x330f3c3c","0x674a2d2d","0xb071c1c1","0x0e575959","0xe99f7676","0xe135d4d4","0x661e7878","0xb4249090","0x360e3838","0x265f7979","0xef628d8d","0x38596161","0x95d24747","0x2aa08a8a","0xb1259494","0xaa228888","0x8c7df1f1","0xd73becec","0x05010404","0xa5218484","0x9879e1e1","0x9b851e1e","0x84d75353","0x00000000","0x5e471919","0x0b565d5d","0xe39d7e7e","0x9fd04f4f","0xbb279c9c","0x1a534949","0x7c4d3131","0xee36d8d8","0x0a020808","0x7be49f9f","0x20a28282","0xd4c71313","0xe8cb2323","0xe69c7a7a","0x42e9abab","0x43bdfefe","0xa2882a2a","0x9ad14b4b","0x40410101","0xdbc41f1f","0xd838e0e0","0x61b7d6d6","0x2fa18e8e","0x2bf4dfdf","0x3af1cbcb","0xf6cd3b3b","0x1dfae7e7","0xe5608585","0x41155454","0x25a38686","0x60e38383","0x16acbaba","0x295c7575","0x34a69292","0xf7996e6e","0xe434d0d0","0x721a6868","0x01545555","0x19afb6b6","0xdf914e4e","0xfa32c8c8","0xf030c0c0","0x21f6d7d7","0xbc8e3232","0x75b3c6c6","0x6fe08f8f","0x691d7474","0x2ef5dbdb","0x6ae18b8b","0x962eb8b8","0x8a800a0a","0xfe679999","0xe2c92b2b","0xe0618181","0xc0c30303","0x8d29a4a4","0xaf238c8c","0x07a9aeae","0x390d3434","0x1f524d4d","0x764f3939","0xd36ebdbd","0x81d65757","0xb7d86f6f","0xeb37dcdc","0x51441515","0xa6dd7b7b","0x09fef7f7","0xb68c3a3a","0x932fbcbc","0x0f030c0c","0x03fcffff","0xc26ba9a9","0xba73c9c9","0xd96cb5b5","0xdc6db1b1","0x375a6d6d","0x15504545","0xb98f3636","0x771b6c6c","0x13adbebe","0xda904a4a","0x57b9eeee","0xa9de7777","0x4cbef2f2","0x837efdfd","0x55114444","0xbdda6767","0x2c5d7171","0x45400505","0x631f7c7c","0x50104040","0x325b6969","0xb8db6363","0x220a2828","0xc5c20707","0xf531c4c4","0xa88a2222","0x31a79696","0xf9ce3737","0x977aeded","0x49bff6f6","0x992db4b4","0xa475d1d1","0x90d34343","0x5a124848","0x58bae2e2","0x71e69797","0x64b6d2d2","0x70b2c2c2","0xad8b2626","0xcd68a5a5","0xcb955e5e","0x624b2929","0x3c0c3030","0xce945a5a","0xab76dddd","0x867ff9f9","0xf1649595","0x5dbbe6e6","0x35f2c7c7","0x2d092424","0xd1c61717","0xd66fb9b9","0xdec51b1b","0x94861212","0x78186060","0x30f3c3c3","0x897cf5f5","0x5cefb3b3","0xd23ae8e8","0xacdf7373","0x794c3535","0xa0208080","0x9d78e5e5","0x56edbbbb","0x235e7d7d","0xc63ef8f8","0x8bd45f5f","0xe7c82f2f","0xdd39e4e4","0x68492121"};
     private static String[] sm4T1 = {"0x5b8ed55b","0x42d09242","0xa74deaa7","0xfb06fdfb", "0x33fccf33","0x8765e287","0xf4c93df4","0xde6bb5de","0x584e1658","0xda6eb4da","0x50441450","0x0bcac10b","0xa08828a0","0xef17f8ef","0xb09c2cb0","0x14110514","0xac872bac","0x9dfb669d","0x6af2986a","0xd9ae77d9","0xa8822aa8","0xfa46bcfa","0x10140410","0x0fcfc00f","0xaa02a8aa","0x11544511","0x4c5f134c","0x98be2698","0x256d4825","0x1a9e841a","0x181e0618","0x66fd9b66","0x72ec9e72","0x094a4309","0x41105141","0xd324f7d3","0x46d59346","0xbf53ecbf","0x62f89a62","0xe9927be9","0xccff33cc","0x51045551","0x2c270b2c","0x0d4f420d","0xb759eeb7","0x3ff3cc3f","0xb21caeb2","0x89ea6389","0x9374e793","0xce7fb1ce","0x706c1c70","0xa60daba6","0x27edca27","0x20280820","0xa348eba3","0x56c19756","0x02808202","0x7fa3dc7f","0x52c49652","0xeb12f9eb","0xd5a174d5","0x3eb38d3e","0xfcc33ffc","0x9a3ea49a","0x1d5b461d","0x1c1b071c","0x9e3ba59e","0xf30cfff3","0xcf3ff0cf","0xcdbf72cd","0x5c4b175c","0xea52b8ea","0x0e8f810e","0x653d5865","0xf0cc3cf0","0x647d1964","0x9b7ee59b","0x16918716","0x3d734e3d","0xa208aaa2","0xa1c869a1","0xadc76aad","0x06858306","0xca7ab0ca","0xc5b570c5","0x91f46591","0x6bb2d96b","0x2ea7892e","0xe318fbe3","0xaf47e8af","0x3c330f3c","0x2d674a2d","0xc1b071c1","0x590e5759","0x76e99f76","0xd4e135d4","0x78661e78","0x90b42490","0x38360e38","0x79265f79","0x8def628d","0x61385961","0x4795d247","0x8a2aa08a","0x94b12594","0x88aa2288","0xf18c7df1","0xecd73bec","0x04050104","0x84a52184","0xe19879e1","0x1e9b851e","0x5384d753","0x00000000","0x195e4719","0x5d0b565d","0x7ee39d7e","0x4f9fd04f","0x9cbb279c","0x491a5349","0x317c4d31","0xd8ee36d8","0x080a0208","0x9f7be49f","0x8220a282","0x13d4c713","0x23e8cb23","0x7ae69c7a","0xab42e9ab","0xfe43bdfe","0x2aa2882a","0x4b9ad14b","0x01404101","0x1fdbc41f","0xe0d838e0","0xd661b7d6","0x8e2fa18e","0xdf2bf4df","0xcb3af1cb","0x3bf6cd3b","0xe71dfae7","0x85e56085","0x54411554","0x8625a386","0x8360e383","0xba16acba","0x75295c75","0x9234a692","0x6ef7996e","0xd0e434d0","0x68721a68","0x55015455","0xb619afb6","0x4edf914e","0xc8fa32c8","0xc0f030c0","0xd721f6d7","0x32bc8e32","0xc675b3c6","0x8f6fe08f","0x74691d74","0xdb2ef5db","0x8b6ae18b","0xb8962eb8","0x0a8a800a","0x99fe6799","0x2be2c92b","0x81e06181","0x03c0c303","0xa48d29a4","0x8caf238c","0xae07a9ae","0x34390d34","0x4d1f524d","0x39764f39","0xbdd36ebd","0x5781d657","0x6fb7d86f","0xdceb37dc","0x15514415","0x7ba6dd7b","0xf709fef7","0x3ab68c3a","0xbc932fbc","0x0c0f030c","0xff03fcff","0xa9c26ba9","0xc9ba73c9","0xb5d96cb5","0xb1dc6db1","0x6d375a6d","0x45155045","0x36b98f36","0x6c771b6c","0xbe13adbe","0x4ada904a","0xee57b9ee","0x77a9de77","0xf24cbef2","0xfd837efd","0x44551144","0x67bdda67","0x712c5d71","0x05454005","0x7c631f7c","0x40501040","0x69325b69","0x63b8db63","0x28220a28","0x07c5c207","0xc4f531c4","0x22a88a22","0x9631a796","0x37f9ce37","0xed977aed","0xf649bff6","0xb4992db4","0xd1a475d1","0x4390d343","0x485a1248","0xe258bae2","0x9771e697","0xd264b6d2","0xc270b2c2","0x26ad8b26","0xa5cd68a5","0x5ecb955e","0x29624b29","0x303c0c30","0x5ace945a","0xddab76dd","0xf9867ff9","0x95f16495","0xe65dbbe6","0xc735f2c7","0x242d0924","0x17d1c617","0xb9d66fb9","0x1bdec51b","0x12948612","0x60781860","0xc330f3c3","0xf5897cf5","0xb35cefb3","0xe8d23ae8","0x73acdf73","0x35794c35","0x80a02080","0xe59d78e5","0xbb56edbb","0x7d235e7d","0xf8c63ef8","0x5f8bd45f","0x2fe7c82f","0xe4dd39e4","0x21684921"};
@@ -28,10 +34,13 @@ public class AlgorithmAutoEmitterUtility {
     //AES：
     //todo:循环10次
     private static int[] AesForlenth = {10,12,14};
+    public static String [] aesSbox =
+            {"0x63","0x7c","0x77","0x7b","0xf2","0x6b","0x6f","0xc5","0x30","0x01","0x67","0x2b","0xfe","0xd7","0xab","0x76","0xca","0x82","0xc9","0x7d","0xfa","0x59","0x47","0xf0","0xad","0xd4","0xa2","0xaf","0x9c","0xa4","0x72","0xc0","0xb7","0xfd","0x93","0x26","0x36","0x3f","0xf7","0xcc","0x34","0xa5","0xe5","0xf1","0x71","0xd8","0x31","0x15","0x04","0xc7","0x23","0xc3","0x18","0x96","0x05","0x9a","0x07","0x12","0x80","0xe2","0xeb","0x27","0xb2","0x75","0x09","0x83","0x2c","0x1a","0x1b","0x6e","0x5a","0xa0","0x52","0x3b","0xd6","0xb3","0x29","0xe3","0x2f","0x84","0x53","0xd1","0x00","0xed","0x20","0xfc","0xb1","0x5b","0x6a","0xcb","0xbe","0x39","0x4a","0x4c","0x58","0xcf","0xd0","0xef","0xaa","0xfb","0x43","0x4d","0x33","0x85","0x45","0xf9","0x02","0x7f","0x50","0x3c","0x9f","0xa8","0x51","0xa3","0x40","0x8f","0x92","0x9d","0x38","0xf5","0xbc","0xb6","0xda","0x21","0x10","0xff","0xf3","0xd2","0xcd","0x0c","0x13","0xec","0x5f","0x97","0x44","0x17","0xc4","0xa7","0x7e","0x3d","0x64","0x5d","0x19","0x73", "0x60","0x81","0x4f","0xdc","0x22","0x2a","0x90","0x88","0x46","0xee","0xb8","0x14","0xde","0x5e","0x0b","0xdb","0xe0","0x32","0x3a","0x0a","0x49","0x06","0x24","0x5c","0xc2","0xd3","0xac","0x62","0x91","0x95","0xe4","0x79","0xe7","0xc8","0x37","0x6d","0x8d","0xd5","0x4e","0xa9","0x6c","0x56","0xf4","0xea","0x65","0x7a","0xae","0x08","0xba","0x78","0x25","0x2e","0x1c","0xa6","0xb4","0xc6","0xe8","0xdd","0x74","0x1f","0x4b","0xbd","0x8b","0x8a","0x70","0x3e","0xb5","0x66","0x48","0x03","0xf6","0x0e","0x61","0x35","0x57","0xb9","0x86","0xc1","0x1d","0x9e","0xe1","0xf8","0x98","0x11","0x69","0xd9","0x8e","0x94","0x9b","0x1e","0x87","0xe9","0xce","0x55","0x28","0xdf","0x8c","0xa1","0x89","0x0d","0xbf","0xe6","0x42","0x68","0x41","0x99","0x2d","0x0f","0xb0","0x54","0xbb","0x16"};
+
     //DES：
 
 
-    public static algorithmType AlgorithmRecognition(String args,String argsval){
+    public static algorithmType AlgorithmRecognition(String args, Map argsval){
         String [] list = splitStringByComma(args);
         for(String item :list){
             // 定义正则表达式模式
@@ -42,45 +51,52 @@ public class AlgorithmAutoEmitterUtility {
                 if(result.length()==10){
                     algorithmType type = isalgorithm(result,argsval);
                     if (type != algorithmType.AlgorithmUNKNOWN){
-                        System.out.println("debugger");
+//                        System.out.println("debugger");
                         return type;
                     }
-
                 }
             }
         }
         return algorithmType.NOAlgorithm;
     }
-    public static String AlgorithmRecognitionKey(String args){
-        String  item = splitStringByComma(args)[0];
+
+    public static String AlgorithmRecognitionKey(String key,String args){
+        String [] item = splitStringByComma(args);
+        for (String item1 : item) {
             // 定义正则表达式模式
             Pattern pattern = Pattern.compile("=(.*)");
-            Matcher matcher = pattern.matcher(item);
+            Matcher matcher = pattern.matcher(item1);
             if (matcher.find()) {
                 String result = matcher.group(1);
-                System.out.println(result);
-                return result;
+                if(!result.contains(key)){
+//                    System.out.println(result);
+                    return result;
+                }
             }
+        }
         return null;
-
     }
 
     public static ArrayList<String> key_list = new ArrayList(4);
-    public static algorithmType isalgorithm(String arg,String argsval){
+    public static String superins = "";
+    public static int superindex = 0;
 
+    public static void initsuperins(){
+        superins = "";
+        superindex = 0;
+    }
+    public static algorithmType isalgorithm(String arg,Map argsval){
 
         for(String sm4item :sm4List){
             if( arg.equals(sm4item)){
                 //常数
-                LineTruncation.storeContentByLine("systemNum:"+arg, publicEntity.path+"/trace.log");
-                JSONObject json = JSON.parseObject(argsval);
-                if (json.getString("instructions").indexOf("eor")!=-1){
-                    String keyitem = AlgorithmRecognitionKey(json.getString("argsVal"));
+                if (argsval.get("instructions").toString().contains("eor")){
+                    String keyitem = AlgorithmRecognitionKey(arg,argsval.get("argsVal").toString());
                     key_list.add(keyitem);
                     if (arg.equals("0xb27022dc")){
                         //最后一次算法，输出并清理所有key
                         String keyval = key_list.get(0)+key_list.get(1)+key_list.get(2)+key_list.get(3);
-                        LineTruncation.storeContentByLine("key:"+keyval,publicEntity.path+"/trace.log");
+                        SaveLog.storeContentByLine("sm4 key:"+keyval+"\n", publicEntity.path+"/trace_algorithm.log");
                         key_list.clear();
                     }
                 }
@@ -88,13 +104,15 @@ public class AlgorithmAutoEmitterUtility {
             };
         }
 
-            if( arg.equals("0xd76aa478")){
-                LineTruncation.storeContentByLine("md5T[0]:"+arg,publicEntity.path+"/trace.log");
-
+            if( arg.equals("0xd76aa478")&&argsval.get("instructions").toString().contains("add")){ //add.*d76aa478
+                SaveLog.storeContentByLine("md5T[0]:"+arg +" "+argsval.toString(),publicEntity.path+"/trace_algorithm.log");
             };
 
         for(String md5item :md5List){
             if( arg.equals(md5item)){
+                if (argsval.get("instructions").toString().contains("eor")&&argsval.get("argsVal").toString().contains("0x10325476")&&argsval.get("argsVal").toString().contains("0x98badcfe")&&argsval.get("resultVal").toString().contains("0x88888888")){
+                    SaveLog.storeContentByLine("\n\nthis is new md5  addr :"+argsval.get("deviation").toString() +"\nmd5 encode value addr in "+argsval.toString() +"\nhook this addr read or write"+"\n or argsVal equese d76aa478",publicEntity.path+"/trace_algorithm.log");
+                }
                 return algorithmType.AlgorithmMD5;
             }
         }
@@ -105,11 +123,27 @@ public class AlgorithmAutoEmitterUtility {
         }
         for(String crc32item :crc32List){
             if(arg.equals(crc32item)){
-                LineTruncation.storeContentByLine(arg,publicEntity.path+"/trace.log");
                 return algorithmType.AlgorithmCRC32;
             }
         }
         return algorithmType.AlgorithmUNKNOWN;
+    }
+
+    public static String GetMemoryAddr(String inputMemory){
+        String addressPattern = "0x[0-9a-fA-F]+";
+        String address = inputMemory.matches(".*(" + addressPattern + ").*") ? inputMemory.replaceAll(".*(" + addressPattern + ").*", "$1") : null;
+        return address;
+    }
+    public static String GetMemoryValue(String inputMemory){
+        String[] parts = inputMemory.split(", ");
+        String dataSizeStr = parts[1].split(" = ")[1]; // "data size = 1" -> "1"
+        int dataSize = Integer.parseInt(dataSizeStr);
+        if(dataSize==1){
+            String dataValueStr = parts[2].split(" = ")[1]; // "data value = 63" -> "63"
+            return dataValueStr;
+        }
+
+        return "";
     }
 
 
@@ -119,7 +153,129 @@ public class AlgorithmAutoEmitterUtility {
      * @return
      */
     public static String[] splitStringByComma(String inputString) {
-        return inputString.split(",");
+        return inputString.split(" ");
     }
+
+
+
+    public static String LongToHex(Long num) {
+        String hexWithoutPrefix = Long.toHexString(num);
+        String hexWithPrefix = "0x" + hexWithoutPrefix;
+        return hexWithPrefix;
+    }
+
+    public static long hexToLong(String hex) {
+        if (hex == null || !hex.startsWith("0x") || hex.length() < 3) {
+            throw new IllegalArgumentException("Invalid hex string format");
+        }
+        String hexValue = hex.substring(2);
+        return Long.parseLong(hexValue, 16);
+    }
+
+    //AES start:
+    public static List<AesSboxEntity> aesSboxMapList = new ArrayList();
+    private static void removeList(int index){
+        aesSboxMapList.remove(index);
+    }
+    //aes sbox下一次应该的地址
+    public static String AESSboxNextMemory(String aesSboxaddr,int aesSboxindex){
+        Long num = hexToLong(aesSboxaddr) + aesSboxindex;
+        return LongToHex(num);
+    }
+    public static void isAes(String line,Map map){
+        String datavalue = GetMemoryValue(line);
+        if (!datavalue.equals("")){
+            if (datavalue.equals(aesSbox[0])){
+                AesSboxEntity aesSboxEntity = new AesSboxEntity();
+                aesSboxEntity.setAesSboxaddr(GetMemoryAddr(line));
+                aesSboxEntity.setAesSboxindex(1);
+                aesSboxEntity.setAddrindex("");
+                aesSboxEntity.setMap(map);
+                aesSboxMapList.add(aesSboxEntity);
+            }
+            for (int i=0;i<aesSboxMapList.size();i++){
+                AesSboxEntity aesSboxEntity = aesSboxMapList.get(i);
+//                if ("0x7a449a78d0".equals(GetMemoryAddr(line))){
+//                    System.out.println("debugger");
+//                }
+                if(!aesSboxEntity.getAesSboxaddr().equals("")){
+//                    下一次应该出现的偏移复制
+                    aesSboxEntity.setAddrindex(AESSboxNextMemory(aesSboxEntity.getAesSboxaddr(),aesSboxEntity.getAesSboxindex())) ;
+                }
+                if (aesSbox[aesSboxEntity.getAesSboxindex()].equals(datavalue)&&aesSboxEntity.getAddrindex().equals(GetMemoryAddr(line))){
+                    System.out.println(aesSboxEntity.getAesSboxindex() +" : "+datavalue);
+                    aesSboxEntity.setAesSboxindex(aesSboxEntity.getAesSboxindex()+1);
+                    if(aesSboxEntity.getAesSboxindex()>=2){
+
+                        boolean b1 = moreSbox(i,205);
+                        boolean b2 = moreSbox(i,145);
+                        boolean b3 = moreSbox(i,123);
+                        boolean b4 = moreSbox(i,255);
+                        if(b1 && b2 && b3 && b4){
+                            SaveLog.storeContentByLine( "Aes encode :  sbox addr:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).getMap().get("deviation") +"  _ "+map.toString(),publicEntity.path+"/trace_algorithm.log");
+                            SaveLog.storeContentByLine( "Aes encode :  sbox manmery:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).toString()+"\n",publicEntity.path+"/trace_algorithm.log");
+                            removeList(i);
+                        }
+                    }
+                }else if((!aesSbox[aesSboxEntity.getAesSboxindex()].equals(datavalue))&&aesSboxEntity.getAddrindex().equals(GetMemoryAddr(line))){
+                    removeList(i);
+                }
+            }
+        }
+    }
+
+
+
+public static boolean moreSbox(int index,int sboxindex){
+    String addr = AlgorithmAutoEmitterUtility.AESSboxNextMemory(AlgorithmAutoEmitterUtility.aesSboxMapList.get(index).getAesSboxaddr(),sboxindex);
+    String str = "] Memory READ at "+addr+".*"+AlgorithmAutoEmitterUtility.aesSbox[sboxindex];
+    return searchInDirectory("/"+publicEntity.path+"/trace.log",str);
+}
+    public static boolean searchInDirectory(String dirPath, String keyword) {
+        boolean foundAny = false;
+        try {
+            // 编译正则表达式
+            Pattern pattern = Pattern.compile(keyword);
+
+            // 获取目录下所有文本文件和日志文件
+            Collection<File> files = FileUtils.listFiles(
+                    new File(dirPath),
+                    new String[]{"txt", "log"},
+                    true
+            );
+
+            // 遍历所有文件
+            for (File file : files) {
+                boolean fileHasMatch = false;
+                LineIterator it = null;
+                try {
+                    it = FileUtils.lineIterator(file, "UTF-8");
+
+                    // 逐行检查匹配
+                    while (it.hasNext()) {
+                        String line = it.nextLine();
+                        if (pattern.matcher(line).find()) {
+                            if (!fileHasMatch) {
+                                System.out.println("\nFound in file: " + file.getAbsolutePath());
+                                fileHasMatch = true;
+                                foundAny = true;
+                            }
+                            System.out.println("  ▶ " + line);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    LineIterator.closeQuietly(it);
+                }
+            }
+        } catch (PatternSyntaxException e) {
+            System.err.println("[Error] Invalid regular expression: " + keyword);
+            e.printStackTrace();
+            return false;
+        }
+        return foundAny;
+    }
+
 
 }

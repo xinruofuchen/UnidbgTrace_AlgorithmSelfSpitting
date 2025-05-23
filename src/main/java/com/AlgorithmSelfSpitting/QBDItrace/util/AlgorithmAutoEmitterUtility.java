@@ -102,9 +102,6 @@ public class AlgorithmAutoEmitterUtility {
     }
     public static algorithmType isalgorithm(String arg,Map argsval){
 
-
-
-
         for(String sm4item :sm4List){
             if( arg.equals(sm4item)){
                 //常数
@@ -161,7 +158,6 @@ public class AlgorithmAutoEmitterUtility {
             String dataValueStr = parts[2].split(" = ")[1]; // "data value = 63" -> "63"
             return dataValueStr;
         }
-
         return "";
     }
 
@@ -234,7 +230,6 @@ public class AlgorithmAutoEmitterUtility {
 
                             SaveLog.storeContentByLine( "Aes encode :  sbox addr:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).getMap().get("deviation") +"  _ "+map.toString(),publicEntity.path+"/trace_algorithm.log");
                             SaveLog.storeContentByLine( "Aes encode :  sbox manmery:" + AlgorithmAutoEmitterUtility.aesSboxMapList.get(i).toString()+"\n",publicEntity.path+"/trace_algorithm.log");
-
                             removeList(i);
                         }
                     }

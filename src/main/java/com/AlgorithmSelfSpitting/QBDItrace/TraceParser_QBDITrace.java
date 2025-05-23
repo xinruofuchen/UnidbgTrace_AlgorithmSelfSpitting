@@ -118,6 +118,7 @@ public class TraceParser_QBDITrace {
 public void test(){
         String line = "0x1fcfc8  _e001000b  \tadd\tw0, w15, w0       r[w0=98badcfe w15=67452301]   w[w0=ffffffff]";
         line = "0x1fcfc8  _e001000b  \tadd\tw0, w15, w0       r[w0=98badcfe w15=67452301]   w[w0=ffffffff]";
+        line = "0x224df4  _a84359b8  \tldur\tw8, [x29, #-108]   r[fp=6fcae6b1b0]   w[w8=4f519485]";
     if (line.startsWith("0x")) {
         SaveLog.storeContentByLine(line,publicEntity.path+"/trace_algorithm.log");
         String [] split_INSTRUCTION = line.toString().split("  ");
@@ -154,7 +155,7 @@ public void test(){
 
 
     public static void main(String[] args) {
-        readFileByLine(publicEntity.path+"/trace_sign.log");
+        readFileByLine(publicEntity.path+"/apse_8.0.0.log");
     }
 
 

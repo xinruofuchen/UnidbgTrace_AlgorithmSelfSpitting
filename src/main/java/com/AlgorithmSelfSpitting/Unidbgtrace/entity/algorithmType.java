@@ -1,4 +1,4 @@
-package com.AlgorithmSelfSpitting.unidbgtrace.entity;
+package com.AlgorithmSelfSpitting.Unidbgtrace.entity;
 
 public enum algorithmType {
     AlgorithmSM4,//算法sm4
